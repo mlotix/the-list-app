@@ -28,7 +28,7 @@ const lists = [
     checked: []
   }
 ]
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {
     lists
   },
@@ -76,6 +76,12 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    IMPORT_STATE_FROM_STORAGE(state) {
+      if(localStorage.getItem('store')) {
+        this.replaceState(
+          Object.assign(state, JSON.parse(localStorage.getItem('store'))))
+      }
+    },
     ADD_ITEM_TO_LIST(state, { newItem, items }) {
       let item = {
         name: newItem,
@@ -90,9 +96,28 @@ export default new Vuex.Store({
     CHECK_ITEM(state, { oldList, itemIndex, newList }) {
       const checkedItem = oldList.splice(itemIndex, 1)[0]
       newList.push(checkedItem)
+    },
+    ADD_NEW_LIST(state, { lists, newList }) {
+      const theList = {
+        title: newList,
+        id: generateID(),
+        items: [],
+        checked: []
+      }
+
+      lists.push(theList)
     }
   },
   actions: {
+    deleteLocalStorage() {
+      localStorage.setItem('store', null);
+    }
   },
   modules: {}
 });
+
+store.subscribe((mutation, state) => {
+  localStorage.setItem('store', JSON.stringify(state));
+});
+
+export default store

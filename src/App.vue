@@ -2,20 +2,24 @@
   <div id="app">
     <Navbar></Navbar>
     <router-view />
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar'
+import Footer from '@/components/footer'
  export default {
    components: {
-     Navbar
+     Navbar,
+     Footer
    }
  }
 </script>
 <style lang="scss">
 #app {
-  background-color: #FDF2E9;
+  background-color: #F2F3F4;
+  min-height:100vh;
 }
 input,
 label,
@@ -47,5 +51,26 @@ textarea
 }
 :-ms-input-placeholder {
   color: #414141;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.slide-enter {
+  transform: translateY(30px);
+}
+.slide-leave-to {
+  opacity: 0;
+}
+.slide-leave-active {
+  transition: opacity .5s;
+}
+.slide-enter-active {
+  transition: transform .5s;
+}
+.slide-move {
+  transition: all .5s;
 }
 </style>

@@ -3,7 +3,6 @@
     <nav class="navbar navbar-expand-md">
       <ul class="navbar-nav">
         <li class="nav-link"><router-link class="text-dark" :to="{ name: 'Home'}">Home</router-link></li>
-        <li class="nav-link"><router-link class="text-dark" :to="{ name: 'List', params: { id: '14ab98c' }}">List</router-link></li>
         <li class="nav-link"><router-link class="text-dark" :to="{ name: 'Lists' }">Lists</router-link></li>
       </ul>
     </nav>

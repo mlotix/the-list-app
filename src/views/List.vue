@@ -3,16 +3,20 @@
     <div class="row">
       <div class="col-md-2 col-lg-3"></div>
       <div class="col col-md-8 col-lg-6">
-        <div class="list-wrapper">
-          <div class="list-head">
-            <h1 class="list-title"> {{ list.title }} </h1>
-            <input class="list-add" placeholder="Add a new item..." @keyup.enter="addNewItem($event, list.items)"/>
-          </div>
-          <div class="list-body">
-            <draggable :list="list.items" group="items" v-bind="dragOptions">
-              <transition-group type="transition" name="moveItem">
-                <div class="list-item" v-for="(item, $index) in list.items"  :key="$index"
-                @click="openItemModal(item.id)">
+        <transition name="fade" appear>
+          <div class="list-wrapper">
+            <div class="list-icons">
+              <fa-icon @click.stop="closeList" class="list-icon" icon="times"/>
+            </div>
+            <div class="list-head">
+              <h1 class="list-title"> {{ list.title }} </h1>
+              <input class="list-add" placeholder="Add a new item..." @keyup.enter="addNewItem($event, list.items)"/>
+            </div>
+            <div class="list-body">
+              <draggable :list="list.items" group="items" v-bind="dragOptions">
+                <transition-group type="transition" name="moveItem">
+                  <div class="list-item" v-for="(item, $index) in list.items"  :key="$index"
+                  @click="openItemModal(item.id)">
                   <div class="item-body">
                     <div style="display:inline-block">
                       <h4>{{ item.name }}</h4>
@@ -33,25 +37,28 @@
               <transition-group type="transition" name="moveItem">
                 <div class="checked-item" v-for="(check, $indexChecked) in list.checked"  :key="$indexChecked"
                 @click="openItemModal(check.id)">
-                  <div style="display:inline-block">
-                    <h4 class="checked-name">{{ check.name }}</h4>
-                    <p v-if="check.desc" class="checked-desc">{{ check.desc }}</p>
-                  </div>
-                  <div class="item-icons">
-                    <fa-icon @click.stop="checkItem(list.checked, $indexChecked, list.items)" class="item-single-icon" icon="chevron-up"/>
-                    <fa-icon @click.stop="removeItem(list.checked, $indexChecked)" class="item-single-icon" icon="trash"/>
-                  </div>
+                <div style="display:inline-block">
+                  <h4 class="checked-name">{{ check.name }}</h4>
+                  <p v-if="check.desc" class="checked-desc">{{ check.desc }}</p>
                 </div>
-              </transition-group>
-            </draggable>
-          </div>
+                <div class="item-icons">
+                  <fa-icon @click.stop="checkItem(list.checked, $indexChecked, list.items)" class="item-single-icon" icon="chevron-up"/>
+                  <fa-icon @click.stop="removeItem(list.checked, $indexChecked)" class="item-single-icon" icon="trash"/>
+                </div>
+              </div>
+            </transition-group>
+          </draggable>
         </div>
+      </div>
+        </transition>
       </div>
       <div class="col-md-2 col-lg-3"></div>
     </div>
-    <div v-if="isItemOpen">
-      <router-view/>
-    </div>
+    <transition name="fade">
+      <div v-if="isItemOpen">
+        <router-view/>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -83,6 +90,9 @@ export default {
     },
     openItemModal(itemID) {
       this.$router.push({ name: 'item', params: {itemID: itemID}})
+    },
+    closeList() {
+      this.$router.push({ name: 'Lists' })
     }
   },
   computed: {
@@ -112,10 +122,23 @@ export default {
   box-sizing: border-box;
   background-color: white;
   margin: 75px 5px;
-  padding: 30px 20px;
+  padding: 20px 20px;
   -webkit-box-shadow: 0px 0px 8px -2px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 8px -2px rgba(0,0,0,0.75);
   box-shadow: 0px 0px 8px -2px rgba(0,0,0,0.55);
+}
+.list-icons {
+  font-size: 26px;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  padding-right: 10px;
+  margin-bottom: 10px;
+}
+.list-icon:hover, .list-icon:focus {
+  color: gray;
+  cursor: pointer;
 }
 .list-title {
   text-align: center;
