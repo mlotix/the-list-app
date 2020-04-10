@@ -81,4 +81,7 @@ textarea
 .slide-move {
   transition: all .5s;
 }
+.view-wrapper {
+  min-height: 80vh;
+}
 </style>

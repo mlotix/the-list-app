@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="container-fluid" @click="toggleDropdown(null)">
+  <div class="container-fluid view-wrapper" @click="toggleDropdown(null)">
     <div class="row">
       <div class="col-md-2 col-lg-4"></div>
       <div class="col col-md-8 col-lg-4">

@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="container-fluid">
+  <div class="container-fluid view-wrapper">
     <div class="home-wrapper">
       <div class="home-title">
         <transition name="slide" appear>
