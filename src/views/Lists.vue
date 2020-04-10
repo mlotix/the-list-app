@@ -153,12 +153,17 @@ export default {
   box-sizing: border-box;
   display: inline-block;
   padding: 10px;
+  max-width: calc(100% - 25px);
 }
 .new-card-body {
   width: 90%;
 }
 .menu-card-title {
   margin:0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: inherit;
 }
 .menu-card-element {
   margin: 0;

@@ -11,7 +11,11 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: Home,
+    meta: {
+      title: 'The List App by Michal Mlotowski',
+      auth: false
+    }
   },
   {
     path: "/list/:id",
@@ -21,12 +25,20 @@ const routes = [
       path: 'item/:itemID',
       name: 'item',
       component: Item
-    }]
+    }],
+    meta: {
+      title: 'List | The List App',
+      auth: false
+    }
   },
   {
     path: "/lists",
     name: 'Lists',
-    component: Lists
+    component: Lists,
+    meta: {
+      title: 'Lists | The List App',
+      auth: false
+    }
   }
 ]
 

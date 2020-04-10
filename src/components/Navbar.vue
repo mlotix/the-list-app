@@ -18,7 +18,7 @@ export default {
 }
 </script>
 
-<style lang="css" scoped >
+<style lang="css" scoped>
 .main-menu {
   background-color:#fff;
   padding: 10px 30px;

@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="container-fluid">
+  <div class="container-fluid" v-if="list">
     <div class="row">
       <div class="col-md-2 col-lg-3"></div>
       <div class="col col-md-8 col-lg-6">
@@ -18,9 +18,9 @@
                   <div class="list-item" v-for="(item, $index) in list.items"  :key="$index"
                   @click="openItemModal(item.id)">
                   <div class="item-body">
-                    <div style="display:inline-block">
-                      <h4>{{ item.name }}</h4>
-                      <p v-if="item.desc">{{ item.desc }}</p>
+                    <div class="item-text-wrap" style="display:inline-block">
+                      <h4 class="item-cut">{{ item.name }}</h4>
+                      <p class="item-cut" v-if="item.desc">{{ item.desc }}</p>
                     </div>
                     <div class="item-icons">
                       <fa-icon @click.stop="checkItem(list.items, $index, list.checked)" class="item-single-icon" icon="check"/>
@@ -37,7 +37,7 @@
               <transition-group type="transition" name="moveItem">
                 <div class="checked-item" v-for="(check, $indexChecked) in list.checked"  :key="$indexChecked"
                 @click="openItemModal(check.id)">
-                <div style="display:inline-block">
+                <div class="checked-text-wrap" style="display:inline-block">
                   <h4 class="checked-name">{{ check.name }}</h4>
                   <p v-if="check.desc" class="checked-desc">{{ check.desc }}</p>
                 </div>
@@ -98,7 +98,10 @@ export default {
   computed: {
     ...mapGetters(['getList']),
     list() {
-      return this.getList(this.$route.params.id)
+      if(this.getList(this.$route.params.id)) {
+        return this.getList(this.$route.params.id)
+      }
+      return null
     },
     dragOptions() {
       return {
@@ -113,6 +116,14 @@ export default {
     isItemOpen() {
       return this.$route.name === 'item'
     }
+  },
+  created () {
+    if(!this.getList(this.$route.params.id)) {
+      this.$router.push({ name: 'Lists' })
+    }
+  },
+  mounted: function() {
+      document.title = this.list.title + " | The List App"
   }
 }
 </script>
@@ -203,5 +214,14 @@ export default {
 }
 .moveItem-move {
   transition: all 0.5s;
+}
+.item-text-wrap, .checked-text-wrap {
+  width: calc(100% - 70px);
+}
+.item-cut, .checked-name, .checked-desc {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 95%;
 }
 </style>

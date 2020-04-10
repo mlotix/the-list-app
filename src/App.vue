@@ -13,6 +13,14 @@ import Footer from '@/components/footer'
    components: {
      Navbar,
      Footer
+   },
+   watch: {
+     '$route' (to) {
+       document.title = to.meta.title
+     },
+   },
+   mounted: function() {
+       document.title = this.$route.meta.title
    }
  }
 </script>
